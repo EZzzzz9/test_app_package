@@ -1,35 +1,38 @@
-name: Build Mac App
+name: Build macOS App
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # чтобы вручную запускать из GitHub
 
 jobs:
-  build-mac:
+  build:
     runs-on: macos-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.11' # или другую версию, которая у тебя
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
-        python3 -m pip install --upgrade pip
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pyinstaller
+        pip install py2app
 
-    - name: Build app
+    - name: Build .app with py2app
       run: |
-        pyinstaller --windowed --name "Тестирование" test_app.py
+        python setup.py py2app
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
+    - name: Rename app to Тестирование.app
+      run: |
+        mv dist/*.app "dist/Тестирование.app"
+
+    - name: Upload .app as artifact
+      uses: actions/upload-artifact@v3
       with:
-        name: Тестирование.app
+        name: Тестирование
         path: dist/Тестирование.app
