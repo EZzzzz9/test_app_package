@@ -32,7 +32,7 @@ jobs:
         mv dist/*.app "dist/Тестирование.app"
 
     - name: Upload .app as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Тестирование
-        path: dist/Тестирование.ap
+        path: dist/Тестирование.app
