@@ -35,4 +35,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Тестирование
-        path: dist/Тестирование.app
+        path: dist/Тестирование.ap
